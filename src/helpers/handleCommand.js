@@ -77,8 +77,6 @@ export const handleCommand = async (fullCommand) => {
 
         getMessage(CURRENT_DIR, process.cwd());
     } catch (error) {
-        // TODO: delete console
-        console.error(error);
         getMessage(ERROR);
     };
 }
