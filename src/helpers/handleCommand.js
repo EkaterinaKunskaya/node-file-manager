@@ -19,7 +19,8 @@ import { hash } from '../handlers/hash/index.js';
 import zip from '../handlers/zip/index.js';
 
 export const handleCommand = async (fullCommand) => {
-    const [command, ...args] = fullCommand.trim().split(' ');
+    const [command, ...rowArgs] = fullCommand.trim().split(' ');
+    const args = rowArgs.filter(Boolean);
 
     try {
         switch (command) {
@@ -76,6 +77,7 @@ export const handleCommand = async (fullCommand) => {
 
         getMessage(CURRENT_DIR, process.cwd());
     } catch (error) {
+        // TODO: delete console
         console.error(error);
         getMessage(ERROR);
     };
