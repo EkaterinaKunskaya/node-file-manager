@@ -1,3 +1,4 @@
+import { homedir } from 'os';
 import { createInterface } from 'readline';
 // CONSTANTS
 import {
@@ -10,6 +11,10 @@ import {
 import { getMessage } from './helpers/getMessage.js';
 import { handleCommand } from './helpers/handleCommand.js';
 
+
+const homeDirectory = homedir();
+const currentDirectory = process.cwd();
+if (homeDirectory !== currentDirectory) process.chdir(homeDirectory);
 
 const username = process.argv.find(argument => argument.startsWith(ARGUMENT_PREFIX_USERNAME)).replace(ARGUMENT_PREFIX_USERNAME, '');
 
