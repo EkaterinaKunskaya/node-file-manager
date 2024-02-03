@@ -3,10 +3,12 @@ import { writeFile, rename, unlink } from 'node:fs/promises';
 import { resolve, basename, parse } from 'node:path';
 import { finished, pipeline } from 'node:stream/promises';
 // HELPERS
-import { getMessage } from '../../helpers/getMessage.js';
+import { isExist } from '../../helpers/isExist.js';
 
 const cat = async (filePath) => {
-    const fileReadableStream = createReadStream(resolve(process.cwd(), filePath));
+    const sourcePath = resolve(process.cwd(), filePath);
+    isExist(sourcePath);
+    const fileReadableStream = createReadStream(sourcePath);
 	fileReadableStream.pipe(process.stdout);
     await finished(fileReadableStream);
 };
@@ -15,21 +17,25 @@ const add = async (newFileName) => {
     try {
         await writeFile(resolve(process.cwd(), newFileName), '', { flag: 'wx' });
     } catch (error) {
-        console.error(error.message);
+        throw new Error(error);
     }
 };
 
 const rn = async (filePath, newFileName) => {
+    const sourceFilePath = resolve(process.cwd(), filePath);
+    isExist(sourceFilePath);
+
     try {
-        await rename(resolve(process.cwd(), filePath), resolve(process.cwd(), newFileName));
+        await rename(sourceFilePath, resolve(process.cwd(), newFileName));
     } catch (error) {
-        console.error(error.message);
+        throw new Error(error);
     }
 };
 
 const cp = async (filePath, newDirectoryPath) => {
     const sourcePath = resolve(process.cwd(), filePath);
     const { dir: directory, name: fileName, ext: fileExtension } = parse(sourcePath);
+    isExist(sourcePath);
 
     try {
         const fileReadableStream = createReadStream(sourcePath);
@@ -40,36 +46,35 @@ const cp = async (filePath, newDirectoryPath) => {
             fileWritableStream,
         )
     } catch(error) {
-        console.log(error)
-        getMessage();
+        throw new Error(error);
     }
 
 };
 
 const rm = async (filePath) => {
-    // TODO valid to exist
+    const sourceFilePath = resolve(process.cwd(), filePath);
+    isExist(sourceFilePath);
+
     try {
-        await unlink(resolve(process.cwd(), filePath));
+        await unlink(sourceFilePath);
     } catch (error) {
-        console.error(error.message);
+        throw new Error(error);
     }
 };
 
 const mv = async (filePath, newDirectoryPath) => {
     const fileName = basename(resolve(process.cwd(), filePath));
+    const sourceFilePath = resolve(process.cwd(), filePath);
+    isExist(sourceFilePath);
     
     try {
-        const fileReadableStream = createReadStream(resolve(process.cwd(), filePath));
+        const fileReadableStream = createReadStream(sourceFilePath);
         const fileWritableStream = createWriteStream(resolve(process.cwd(), newDirectoryPath, fileName));
     
-        await pipeline (
-            fileReadableStream,
-            fileWritableStream,
-        )
-
+        await pipeline (fileReadableStream, fileWritableStream)
         await rm(filePath);
     } catch (error) {
-        getMessage();
+        throw new Error(error);
     }
 };
 
