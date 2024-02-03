@@ -78,5 +78,6 @@ export const handleCommand = async (fullCommand) => {
         getMessage(CURRENT_DIR, process.cwd());
     } catch (error) {
         getMessage(ERROR);
+        getMessage(CURRENT_DIR, process.cwd());
     };
 }
