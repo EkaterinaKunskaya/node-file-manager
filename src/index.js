@@ -16,14 +16,14 @@ const homeDirectory = homedir();
 const currentDirectory = process.cwd();
 if (homeDirectory !== currentDirectory) process.chdir(homeDirectory);
 
-const username = process.argv.find(argument => argument.startsWith(ARGUMENT_PREFIX_USERNAME)).replace(ARGUMENT_PREFIX_USERNAME, '');
+const username = process.argv.find(argument => argument.startsWith(ARGUMENT_PREFIX_USERNAME))?.replace(ARGUMENT_PREFIX_USERNAME, '');
 
 const readlineInterface = createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 
-getMessage(WELCOME, username);
+getMessage(WELCOME, username || 'Anonymous');
 getMessage(CURRENT_DIR, process.cwd());
 readlineInterface.on('line', handleCommand);
 
