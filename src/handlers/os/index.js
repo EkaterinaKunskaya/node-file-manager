@@ -1,16 +1,16 @@
 import { EOL, arch, cpus, homedir, userInfo } from 'node:os';
 // CONSTANTS
-import { UNKNOWN_OPERATION } from '../../constants/constants.js';
+import { UNKNOWN_OPERATION, OS_ARGS } from '../../constants/constants.js';
 // HELPERS
 import { getMessage } from '../../helpers/getMessage.js';
 
 export const os = async (arg) => {
     switch (arg) {
-        case '--EOL':
+        case OS_ARGS.EOL:
             console.log(JSON.stringify(EOL));
             break;
-        case '--cpus':
-            const cpusInfo = cpus().map((cpu, index) => {
+        case OS_ARGS.CPUS:
+            const cpusInfo = cpus().map(cpu => {
                 return {
                     Model: cpu.model,
                     Speed: `${cpu.speed/1000} GHz`,
@@ -19,13 +19,13 @@ export const os = async (arg) => {
             console.log(`Total: ${cpusInfo.length}`);
             console.table(cpusInfo);
             break;
-        case '--homedir':
+        case OS_ARGS.HOMEDIR:
             console.log(homedir());
             break;
-        case '--username':
+        case OS_ARGS.USERNAME:
             console.log(userInfo().username);
             break;
-        case '--architecture':
+        case OS_ARGS.ARCH:
             console.log(arch());
             break;
         default:

@@ -7,6 +7,7 @@ const GOODBYE = 'GOODBYE';
 const CURRENT_DIR = 'CURRENT_DIR';
 const UNKNOWN_OPERATION = 'UNKNOWN_OPERATION';
 const ERROR = 'ERROR';
+const NO_FILE = 'NO_FILE';
 
 // CONSTANTS FOR nwd
 const LIST_DIRECTORY = 'directory';
@@ -33,6 +34,14 @@ const ZIP = {
     DECOMPRESS: 'decompress',
 };
 
+// CONSTANTS FOR OS
+const OS_ARGS = {
+    EOL: '--EOL',
+    CPUS: '--cpus',
+    HOMEDIR: '--homedir',
+    USERNAME: '--username',
+    ARCH: '--architecture',
+}
 
 export {
     WELCOME,
@@ -40,6 +49,7 @@ export {
     CURRENT_DIR,
     UNKNOWN_OPERATION,
     ERROR,
+    NO_FILE,
     ARGUMENT_PREFIX_USERNAME,
     LIST_DIRECTORY,
     LIST_FILE,
@@ -48,4 +58,5 @@ export {
     OS,
     HASH,
     ZIP,
+    OS_ARGS,
 };
