@@ -1,4 +1,4 @@
-import { WELCOME, GOODBYE, CURRENT_DIR, UNKNOWN_OPERATION, ERROR } from '../constants/constants.js';
+import { WELCOME, GOODBYE, CURRENT_DIR, UNKNOWN_OPERATION, ERROR, NO_FILE } from '../constants/constants.js';
 
 export const getMessage = (type, arg) => {
     switch (type) {
@@ -16,6 +16,9 @@ export const getMessage = (type, arg) => {
             break;
         case ERROR:
             console.log('Operation failed');
+            break;
+        case NO_FILE:
+            console.log('File don\'t exist');
             break;
         default:
             console.log('Oops, something went wrong');
