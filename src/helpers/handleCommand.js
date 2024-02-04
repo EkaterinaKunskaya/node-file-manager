@@ -11,6 +11,7 @@ import {
 } from '../constants/constants.js';
 // HELPERS
 import { getMessage } from '../helpers/getMessage.js';
+import { removeQuotes } from './removeQuotes.js';
 // HANDLERS
 import nwd from '../handlers/nwd/index.js';
 import fs from '../handlers/fs/index.js';
@@ -20,8 +21,8 @@ import zip from '../handlers/zip/index.js';
 
 export const handleCommand = async (fullCommand) => {
     const [command, ...rowArgs] = fullCommand.trim().split(' ');
-    const args = rowArgs.filter(Boolean);
-
+    const args = removeQuotes(rowArgs);
+    
     try {
         switch (command) {
             // Navigation & working directory (nwd)
